@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   def encode_token(payload)
     exp = Time.now.to_i + 3600
     payload.merge!(exp)
-    JWT.encode(payload, 'secret')
+    JWT.encode(payload, ENV['SECRET'])
   end
 
   def auth_header
@@ -17,11 +17,10 @@ class ApplicationController < ActionController::API
     # strict check for 'Authorization': 'Bearer <token>' format
     token = auth_header.split(' ')[1]
     begin
-      JWT.decode(token, 'secret', true, algorithm: 'HS256')
+      JWT.decode(token, ENV['SECRET'], true, algorithm: 'HS256')
     rescue JWT::DecodeError
       nil
-    # rescue JWT::ExpiredSignature
-      #Handle expirationn
+2      #Handle expirationn
     end
   end
 
