@@ -2,6 +2,8 @@ class ApplicationController < ActionController::API
   before_action :authorized
 
   def encode_token(payload)
+    exp = Time.now.to_i + 3600
+    payload.merge!(exp)
     JWT.encode(payload, 'secret')
   end
 
@@ -18,6 +20,8 @@ class ApplicationController < ActionController::API
       JWT.decode(token, 'secret', true, algorithm: 'HS256')
     rescue JWT::DecodeError
       nil
+    # rescue JWT::ExpiredSignature
+      #Handle expirationn
     end
   end
 
@@ -29,7 +33,11 @@ class ApplicationController < ActionController::API
   end
 
   def logged_in?
-    current_user.nil?
+    current_user.is_a?(User)
+  end
+
+  def current_admin_user
+    current_user&.admin
   end
 
   def authorized
