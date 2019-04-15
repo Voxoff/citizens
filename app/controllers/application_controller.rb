@@ -18,9 +18,8 @@ class ApplicationController < ActionController::API
     token = auth_header.split(' ')[1]
     begin
       JWT.decode(token, ENV['SECRET'], true, algorithm: 'HS256')
-    rescue JWT::DecodeError
+    rescue JWT::DecodeError, JWT::ExpiredSignature
       nil
-2      #Handle expirationn
     end
   end
 

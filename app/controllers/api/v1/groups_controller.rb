@@ -9,13 +9,4 @@ class Api::V1::GroupsController < ApplicationController
       render json: { message: 'The group was not created' }, status: :unacceptable
     end
   end
-
-  # def add_users
-  #   return render json: { message: 'Not authorized' }, status: :unauthorized unless current_admin_user
-
-  #   # Suppose we get a hash with {group_id => [user_ids]}
-  #   # {1 => [1,2,3], 3 => 3}
-
-
-  # end
 end
