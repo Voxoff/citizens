@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   before_action :authorized
 
   def encode_token(payload)
-    exp = Time.now.to_i + 3600
+    exp = { exp: Time.now.to_i + 3600 }
     payload.merge!(exp)
     JWT.encode(payload, ENV['SECRET'])
   end
@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
   def decoded_token
     return nil unless auth_header
 
-    # strict check for 'Authorization': 'Bearer <token>' format
+    # strict check for 'Authorization': 'Bearer <token>' format????????????????/
     token = auth_header.split(' ')[1]
     begin
       JWT.decode(token, ENV['SECRET'], true, algorithm: 'HS256')
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::API
   def current_user
     return nil unless decoded_token
 
-    user_id = decoded_token[0]['user_id']
+    user_id = decoded_token.first.fetch('user_id')
     @user = User.find_by(id: user_id)
   end
 
