@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   before_action :authorized
 
   def encode_token(payload)
-    exp = { exp: Time.now.to_i + 3600 }
+    exp = { exp: (Time.now + 1.hour).to_i }
     payload.merge!(exp)
     JWT.encode(payload, ENV['SECRET'])
   end
