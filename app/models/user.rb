@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   validates :email, presence: false, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }
   validates :username, uniqueness: true
+  validates :admin, inclusion: { in: [true, false]}
 end
