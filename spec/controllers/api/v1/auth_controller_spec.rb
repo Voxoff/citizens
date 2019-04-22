@@ -17,20 +17,20 @@ RSpec.describe Api::V1::AuthController, type: :controller do
       }
     end
 
-    it 'should authenticate a user with valid params' do
+    it 'authenticates a user with valid params' do
       User.create(valid_params[:user])
       post :create, params: valid_params
       expect(response).to have_http_status(:accepted)
       expect(json.keys).to match_array(%w[jwt user])
     end
 
-    it 'should render a message with invalid params' do
+    it 'renders a message with invalid params' do
       post :create, params: { user: { username: '', password: '' } }
       expect(response).to have_http_status(:unauthorized)
       expect(json).to have_key('message')
     end
 
-    it 'should render a message if password is incorrect' do
+    it 'renders a message if password is incorrect' do
       post :create, params: invalid_params
       expect(response).to have_http_status(:unauthorized)
       expect(json).to have_key('message')
