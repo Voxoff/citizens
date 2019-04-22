@@ -6,7 +6,7 @@ class Api::V1::GroupsController < ApplicationController
     if @group.save
       render json: { group: @group }, status: :created
     else
-      render json: { message: 'The group was not created' }, status: :unacceptable
+      render json: { message: 'The group was not created' }, status: :not_acceptable
     end
   end
 
@@ -18,7 +18,7 @@ class Api::V1::GroupsController < ApplicationController
       @group.update(user_ids: all_ids)
       render json: { group: @group, user_ids: @group.user_ids }, status: :ok
     else
-      render json: { message: 'The group could not be found' }, status: :unacceptable
+      render json: { message: 'The group could not be found' }, status: :not_found
     end
   end
 
