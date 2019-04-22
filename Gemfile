@@ -17,7 +17,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-rails'
   gem 'dotenv-rails'
   gem 'rspec-rails'
 end
