@@ -1,8 +1,17 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :authorized, only: [:create]
 
-  def show
-    render json: { user: current_user }, status: :accepted
+  def profile
+    email = user_params[:email]
+    username = user_params[:username]
+    user = User.find_by(email: email) if email
+    user = User.find_by(username: username) if username && user.nil?
+
+    if user
+      render json: { user: user }, status: :accepted
+    else
+      render json: { message: 'The user could not be found' }, status: :not_found
+    end
   end
 
   def create
