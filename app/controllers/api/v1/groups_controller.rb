@@ -23,7 +23,7 @@ class Api::V1::GroupsController < ApplicationController
   end
 
   def admin_user
-    return render json: { message: 'Not authorized' }, status: :unauthorized unless current_admin_user
+    return render json: { message: 'Not authorized' }, status: :unauthorized unless current_user_admin?
   end
 
   def group_params

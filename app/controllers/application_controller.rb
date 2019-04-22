@@ -34,7 +34,7 @@ class ApplicationController < ActionController::API
     current_user.is_a?(User)
   end
 
-  def current_admin_user
+  def current_user_admin?
     current_user&.admin
   end
 
